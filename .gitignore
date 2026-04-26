@@ -1,0 +1,52 @@
+# ==== Build ====
+target/
+build/
+*.jar
+*.war
+
+# ==== Logs ====
+*.log
+logs/
+
+# ==== OS ====
+.DS_Store
+Thumbs.db
+
+# ==== Env / secrets ====
+.env
+application-local.properties
+application-local.yml
+
+# ==== Maven Wrapper ====
+.mvn/wrapper/maven-wrapper.jar
+
+# ==== STS ====
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+# ==== IntelliJ IDEA ====
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# ==== NetBeans ====
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# ==== VS Code ====
+.vscode/
+
+# ==== Multi-module exceptions ====
+!**/src/main/**/target/
+!**/src/test/**/target/
+!**/src/main/**/build/
+!**/src/test/**/build/
