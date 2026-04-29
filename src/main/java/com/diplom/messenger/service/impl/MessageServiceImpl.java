@@ -125,4 +125,28 @@ public class MessageServiceImpl implements MessageService {
                 .createdAt(message.getCreatedAt())
                 .build();
     }
+
+    @Override
+    @Transactional
+    public MessageResponse sendMessage(String username, Long chatId, SendMessageRequest request) {
+        Chat chat = getChat(chatId);
+        checkMember(chat, username);
+        User sender = getUser(username);
+
+        Message message = Message.builder()
+                .chat(chat)
+                .sender(sender)
+                .type(request.getType())
+                .encryptedContent(request.getEncryptedContent())
+                .ivHex(request.getIvHex())
+                .build();
+
+        if (request.getReplyToId() != null) {
+            Message replyTo = getMessage(request.getReplyToId());
+            message.setReplyTo(replyTo);
+        }
+
+        messageRepository.save(message);
+        return toResponse(message);
+    }
 }

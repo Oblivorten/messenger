@@ -10,4 +10,5 @@ public interface MessageService {
     void deleteMessage(String username, Long messageId);
     MessageResponse editMessage(String username, Long messageId, SendMessageRequest request);
     void markAsRead(String username, Long messageId);
+    MessageResponse sendMessage(String username, Long chatId, SendMessageRequest request);
 }
