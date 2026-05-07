@@ -9,13 +9,10 @@ import java.time.LocalDateTime;
 @Getter
 @Builder
 @AllArgsConstructor
-public class CallHistoryResponse {
+public class NotificationResponse {
     private Long id;
-    private Long chatId;
-    private String initiatorUsername;
     private String type;
-    private String status;
-    private LocalDateTime startedAt;
-    private LocalDateTime endedAt;
-    private Long duration;
+    private String content;
+    private boolean read;
+    private LocalDateTime createdAt;
 }

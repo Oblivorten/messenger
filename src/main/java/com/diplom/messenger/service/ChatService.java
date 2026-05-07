@@ -1,9 +1,6 @@
 package com.diplom.messenger.service;
 
-import com.diplom.messenger.dto.request.AddMemberRequest;
-import com.diplom.messenger.dto.request.CreateChatRequest;
-import com.diplom.messenger.dto.request.UpdateChatRequest;
-import com.diplom.messenger.dto.request.UpdateMemberRoleRequest;
+import com.diplom.messenger.dto.request.*;
 import com.diplom.messenger.dto.response.ChatMemberResponse;
 import com.diplom.messenger.dto.response.ChatResponse;
 
@@ -19,4 +16,5 @@ public interface ChatService {
     void removeMember(String username, Long chatId, Long userId);
     void updateMemberRole(String username, Long chatId, Long userId, UpdateMemberRoleRequest request);
     List<ChatMemberResponse> getMembers(String username, Long chatId);
+    void muteChat(String username, Long chatId, MuteChatRequest request);
 }

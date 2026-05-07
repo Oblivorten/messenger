@@ -200,4 +200,15 @@ public class ChatServiceImpl implements ChatService {
                 .unreadCount(unread)
                 .build();
     }
+
+    @Override
+    @Transactional
+    public void muteChat(String username, Long chatId, MuteChatRequest request) {
+        Chat chat = getChat(chatId);
+        User user = getUser(username);
+        ChatMember member = chatMemberRepository.findByChatAndUser(chat, user)
+                .orElseThrow(() -> new RuntimeException("Вы не участник чата"));
+        member.setMutedUntil(request.getMutedUntil());
+        chatMemberRepository.save(member);
+    }
 }

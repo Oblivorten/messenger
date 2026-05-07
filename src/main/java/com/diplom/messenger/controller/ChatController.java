@@ -90,4 +90,12 @@ public class ChatController {
                                                              @RequestParam(defaultValue = "20") int limit) {
         return ResponseEntity.ok(messageService.getMessages(userDetails.getUsername(), id, cursor, limit));
     }
+
+    @PutMapping("/{id}/mute")
+    public ResponseEntity<Void> muteChat(@AuthenticationPrincipal UserDetails userDetails,
+                                         @PathVariable Long id,
+                                         @RequestBody MuteChatRequest request) {
+        chatService.muteChat(userDetails.getUsername(), id, request);
+        return ResponseEntity.ok().build();
+    }
 }
