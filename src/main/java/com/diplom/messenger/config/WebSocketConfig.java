@@ -35,8 +35,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws")
-                .setAllowedOriginPatterns("*")
-                .withSockJS();
+                .setAllowedOriginPatterns("*");
     }
 
     @Override
@@ -48,17 +47,24 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
                         message, StompHeaderAccessor.class);
 
                 if (accessor != null && StompCommand.CONNECT.equals(accessor.getCommand())) {
+                    String token = null;
+
                     String authHeader = accessor.getFirstNativeHeader("Authorization");
                     if (authHeader != null && authHeader.startsWith("Bearer ")) {
-                        String token = authHeader.substring(7);
-                        if (jwtUtil.isValid(token)) {
-                            String username = jwtUtil.extractUsername(token);
-                            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-                            UsernamePasswordAuthenticationToken auth =
-                                    new UsernamePasswordAuthenticationToken(
-                                            userDetails, null, userDetails.getAuthorities());
-                            accessor.setUser(auth);
-                        }
+                        token = authHeader.substring(7);
+                    }
+
+                    if (token == null) {
+                        token = accessor.getFirstNativeHeader("token");
+                    }
+
+                    if (token != null && jwtUtil.isValid(token)) {
+                        String username = jwtUtil.extractUsername(token);
+                        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+                        UsernamePasswordAuthenticationToken auth =
+                                new UsernamePasswordAuthenticationToken(
+                                        userDetails, null, userDetails.getAuthorities());
+                        accessor.setUser(auth);
                     }
                 }
                 return message;
